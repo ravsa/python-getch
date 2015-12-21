@@ -41,7 +41,6 @@ cdef extern from "termios.h":
 
     int tcsetattr(unsigned int _fd, unsigned int _fd, termios *termios_p)
 
-
 cdef int _getch():
 # read keypress and dont echo
 
