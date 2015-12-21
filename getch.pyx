@@ -42,3 +42,15 @@ cdef extern from "termios.h":
     int tcsetattr(unsigned int _fd, unsigned int _fd, termios *termios_p)
 
 
+cdef int _getch():
+# read keypress and dont echo
+
+    cdef termios temp_new, temp_old # Termporary struct termios variable to store attributes 
+    cdef int ch
+    tcgetattr(STDIN_FILENO, &temp_old) #store attributes in temp_old variable  
+    temp_new = temp_old 
+    temp_new.c_lflag &= ~(ICANON | ECHO) #unset the ICANON and ECHO flags 
+    tcsetattr(STDIN_FILENO, TCSANOW, &temp_new) #set changed attributes 
+    ch = getchar()
+    tcsetattr(STDIN_FILENO, TCSANOW, &temp_old) #set old attributes
+    return ch
