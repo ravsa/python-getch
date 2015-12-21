@@ -54,3 +54,18 @@ cdef int _getch():
     ch = getchar()
     tcsetattr(STDIN_FILENO, TCSANOW, &temp_old) #set old attributes
     return ch
+
+cdef int _getche():
+# read keypress and echo
+
+    cdef termios temp_new, temp_old
+    cdef int ch
+    tcgetattr(STDIN_FILENO, &temp_old)
+    temp_new = temp_old
+    temp_new.c_lflag &= ~(ICANON)
+    tcsetattr(STDIN_FILENO, TCSANOW, &temp_new)
+    ch = getchar()
+    tcsetattr(STDIN_FILENO, TCSANOW, &temp_old)
+    return ch
+
+
