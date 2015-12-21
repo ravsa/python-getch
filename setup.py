@@ -3,7 +3,7 @@ from distutils.extension import Extension
 from Cython.Distutils import build_ext
 
 ext = Extension('getch',
-                sources=['getch.pyx'],
+                sources=['package/getch.pyx'],
                 )
 
 setup(ext_modules=[ext],
