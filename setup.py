@@ -1,11 +1,14 @@
 from distutils.core import setup
 from distutils.extension import Extension
-from Cython.Distutils import build_ext
 
 ext = Extension('getch',
-                sources=['getch.pyx'],
+                sources=['build/lib.linux-i686-2.7/getch.so'],
                 )
 
-setup(ext_modules=[ext],
-      cmdclass={'build_ext': build_ext},
+setup(name='getch',
+      description='keypress event related functions getch(),pause(),kbhit()',
+      author='Ravindra Singh Ratnawat',
+      author_email='rvsbana@gmail.com',
+      url='https://github.com/ravsa',
+      ext_modules=[ext],
       )
