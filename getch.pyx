@@ -41,7 +41,7 @@ cdef extern from "termios.h":
 
     int tcsetattr(unsigned int _fd, unsigned int _fd, termios *termios_p)
 
-cdef int _getch():
+cdef int x_getch():
 # read keypress and dont echo
 
     cdef termios temp_new, temp_old # Termporary struct termios variable to store attributes 
@@ -54,7 +54,7 @@ cdef int _getch():
     tcsetattr(STDIN_FILENO, TCSANOW, &temp_old) #set old attributes
     return ch
 
-cdef int _getche():
+cdef int x_getche():
 # read keypress and echo
 
     cdef termios temp_new, temp_old
@@ -68,17 +68,30 @@ cdef int _getche():
     return ch
 
 
-def getch(string):
+def getch(string=None):
     """ Read a character from standard input and not echoing it."""
 
-    if string != '':
+    if string != None:
         print string,
-    return unicode(chr(_getch()))  #convert the int return by _getch() into unicode char 
+    return unicode(chr(x_getch()))  #convert the int return by x_getch() into unicode char 
 
 
-def getche(string):
+def getche(string=None):
     """ Read a character from standard input and echoing it."""
 
-    if string != '':
+    if string != None:
         print string,
-    return unicode(chr(_getche())) #convert the int return by _getche() into unicode char
+    return unicode(chr(x_getche())) #convert the int return by x_getche() into unicode char
+
+def kbhit(string=None):
+    """ Wait for keypress and return True"""
+    if string != None:
+        print string,
+    x_getch()
+    return True
+
+def pause(string=None):
+    """Hold screen for keypress event"""
+    if string != None:
+        print string,
+    x_getch()
