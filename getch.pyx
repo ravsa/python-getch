@@ -68,13 +68,17 @@ cdef int _getche():
     return ch
 
 
-def getch():
+def getch(string):
     """ Read a character from standard input and not echoing it."""
 
+    if string != '':
+        print string,
     return unicode(chr(_getch()))  #convert the int return by _getch() into unicode char 
 
 
-def getche():
+def getche(string):
     """ Read a character from standard input and echoing it."""
 
+    if string != '':
+        print string,
     return unicode(chr(_getche())) #convert the int return by _getche() into unicode char
